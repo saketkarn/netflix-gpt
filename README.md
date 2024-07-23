@@ -2,3 +2,18 @@
 
 - Create React App
 - Configured Tailwind CSS
+
+#Features
+-Login/Sign Up
+    -Sign in/sign up form
+    -once logged in->redirect to browse page
+-Browse (after authentication)
+    - Header
+    -Main movie
+        -Trailer in background
+        -Title and description
+    -Movie sugestions
+        -Movie list*N -- vertically scrollable
+-NetflixGPT
+    -Search Bar
+    -Movie Suggestions
