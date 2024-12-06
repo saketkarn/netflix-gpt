@@ -7,6 +7,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage]= useState(null)
   const email = useRef(null)
   const password = useRef(null)
+  const name=useRef(null)
   const toggleSignInForm=()=>{
     setIsSignInForm(!isSignInForm)
   }
@@ -14,10 +15,10 @@ const Login = () => {
   const handleButtonClick=()=>{
     //First validate the form data
     
-    console.log(email.current.value)
-    console.log(password.current.value)
+    // console.log(email.current.value)
+    // console.log(password.current.value)
 
-    const errMessage=checkValidData(email.current.value, password.current.value)
+    const errMessage=checkValidData(email.current.value, password.current.value, name.current.value)
     setErrorMessage(errMessage)
     // console.log(errMessage)
   }
@@ -33,10 +34,10 @@ const Login = () => {
       <div className="flex-1 flex items-center justify-center">
         <form onSubmit={(e)=> e.preventDefault()} className='w-3/12 absolute p-12 bg-black bg-opacity-70 rounded text-white'>
           <h1 className='font-bold text-3xl py-4 px-2'>{isSignInForm?"Sign In":"Sign Up"}</h1>
-          {!isSignInForm && (<input type="text" placeholder='Full Name' className='p-2 my-4 block w-full bg-black bg-opacity-40 border border-white-500'/>)}
+          {!isSignInForm && (<input ref={name} type="text" placeholder='Full Name' className='p-2 my-4 block w-full bg-black bg-opacity-40 border border-white-500'/>)}
           <input ref={email} type="text" placeholder='Email' className='p-2 my-4 block w-full bg-black bg-opacity-40 border border-white-500'/>
           <input ref={password} type="password" placeholder='Password' className='p-2 my-4 block w-full bg-black bg-opacity-40 border border-white-500' />
-          <p className='text-red-500'>{errorMessage}</p>
+          <p className='text-red-500 font-bold text-lg py-1'>{errorMessage}</p>
           <button className='p-3 my-4 w-full bg-red-700 text-white rounded bg-black' onClick={handleButtonClick}>
             {isSignInForm?"Sign In":"Sign Up"}</button>
           <p className='py-4 cursor-pointer' onClick={toggleSignInForm}>{isSignInForm?"New to Netflix? Sign up now.":"Already Registered? Sign In Now."}</p>
