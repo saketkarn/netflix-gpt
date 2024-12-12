@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -19,12 +22,50 @@ const Login = () => {
     // console.log(password.current.value)
 
     const errMessage = checkValidData(
-      email.current.value,
-      password.current.value,
-      name.current.value
+      email.current?.value,
+      password.current?.value,
+      name.current?.value
     );
     setErrorMessage(errMessage);
     // console.log(errMessage)
+
+    if(errMessage)  return
+
+    //Sign in / sign up logic
+
+    if(!isSignInForm){
+      //sign up logic
+
+          createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        console.log(user)
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode+" "+errorMessage)
+        // ..
+      });
+    }
+
+    else{
+      //sign in logic
+        signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user)
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setErrorMessage(errorCode+"-"+errorMessage)
+    });
+      }
   };
   return (
     <div className="relative flex flex-col min-h-screen overflow-hidden">
